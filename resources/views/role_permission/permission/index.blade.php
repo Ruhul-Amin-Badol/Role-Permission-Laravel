@@ -1,0 +1,71 @@
+@extends('layouts.master')
+@section('content')
+    {{-- <div class="content-header"> --}}
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Permission</h1>
+            </div><!-- /.col -->
+            {{-- <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Permission</li>
+          </ol>
+        </div><!-- /.col --> --}}
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+    </div>
+
+    @include('role_permission.nav-link')
+
+    <div class="container mt-3">
+        <div class="row">
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            <div class="col-md-12 mt-3">
+                <div class="card shadow-lg">
+                    <div class="card-header">
+                        <h4>Permissions</h4>
+                        <div>
+                            <a href="{{ route('permission.create') }}" class="btn btn-primary float-end">Add Permission <i
+                                    class="fa-solid fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover table-stripe">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($permission as $permission)
+                                    <tr>
+                                        <td>{{ $permission->id }}</td>
+                                        <td>{{ $permission->name }}</td>
+                                        <td>
+                                            @can('Update permission')
+                                                <a href="{{ url('permission/' . $permission->id . '/edit') }}"
+                                                    class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            @endcan
+                                            @can('Delete permission')
+                                                <a
+                                                    href="{{ url('permission/' . $permission->id . '/delete') }}"class="btn btn-danger"><i
+                                                        class="fa-solid fa-trash"></i></a>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
